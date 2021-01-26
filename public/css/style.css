@@ -1,0 +1,160 @@
+/* Estilo gerais */
+
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Header */
+.header {
+  width: 100%;
+  height: 80px;
+  background-color: #172a64;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  padding: 22px 0;
+}
+
+.header_menu {
+  text-align: right;
+  padding-top: 8px;
+}
+
+.header_menu ul li {
+  display: inline-block;
+  margin-left: 25px;
+}
+
+.header_menu ul li a {
+  padding: 5px 10px;
+}
+
+/* BOTÃO  */
+
+.btn {
+  color: #e77448;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background-color: none;
+}
+
+.btn:hover {
+  color: #eaf3ee;
+}
+
+/* LOGOTIPO*/
+
+.logo {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: left;
+  margin-left: 8px;
+  color: #e77448;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.logo:hover {
+  color: #eaf3ee;
+}
+
+.logo-text {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 30px;
+  font-weight: bold;
+  color: #e77448;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.logo-text-smaller {
+  font-size: 24px;
+}
+
+.logo-text-smaller-blue {
+  color: #172a64;
+  font-size: 18px;
+}
+
+.logo-text-smaller-orange {
+  color: #e77448;
+  font-size: 18px;
+}
+
+/* Introdução */
+
+.introducao-title {
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 55px;
+  color: #eaf3ee;
+  letter-spacing: 0.1em;
+  padding-top: 100px;
+}
+
+.introducao-sub-title {
+  font-size: 36px;
+  line-height: 25px;
+  color: #ededed;
+  letter-spacing: 0.1em;
+  padding-top: 10px;
+  margin-bottom: 60px;
+}
+
+.introducao-sub-title::after {
+  content: "";
+  width: 120px;
+  height: 3px;
+  display: block;
+  background-color: #ededed;
+  margin: 20px auto 8px auto;
+}
+
+.btn-introducao {
+  font-size: 18px;
+  border: #e77448 solid 3px;
+  padding: 8px 20px;
+}
+
+.btn-introducao:hover {
+  border: #eaf3ee solid 3px;
+}
+/* Conteúdo */
+
+.conteudo-title {
+  color: #172a64;
+  text-transform: uppercase;
+  padding-top: 60px;
+  font-size: 36px;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+
+.conteudo-title::after {
+  content: "";
+  width: 140px;
+  height: 3px;
+  display: block;
+  background-color: #172a64;
+  margin: 20px auto 8px auto;
+}
+
+/* Slide */
+
+[data-slide] {
+  position: relative;
+}
+[data-slide] > * {
+  position: absolute;
+  top: 0px;
+  opacity: 0;
+}
+[data-slide] > .active {
+  position: relative;
+  opacity: 1;
+  transition: opacity 500ms;
+  z-index: 1;
+}

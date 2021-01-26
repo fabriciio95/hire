@@ -1,25 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
+import { Component } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Home from './components/Home';
+import Header from './components/Header';
+import FooterAzul from './components/FooterAzul';
+import FooterEscuro from './components/FooterEscuro';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+ class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.onRefreshHandler = this.onRefreshHandler.bind(this);
+  }
+
+  onRefreshHandler(){
+    this.forceUpdate();
+  }
+
+   render() {
+    return (
+      <BrowserRouter>
+        <Header />
+        <div className="App">
+          <Switch>
+            <Route path="/" render={ () => <Home /> }/>
+          </Switch>
+       
+        { window.location.pathname === "/form" ? 
+              <FooterEscuro /> : <FooterAzul isWithButton={true}/>
+        }
+         </div>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;
