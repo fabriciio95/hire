@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FooterAzul from './FooterAzul'
 
 
 class Home extends Component {  
@@ -38,6 +39,7 @@ class Home extends Component {
           </li>
         </ul>
       </section>
+      <FooterAzul isWithButton={true}/>
      </div>
     );
   }

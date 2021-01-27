@@ -2,9 +2,8 @@ import './App.css';
 import { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
+import Login from './components/Login'
 import Header from './components/Header';
-import FooterAzul from './components/FooterAzul';
-import FooterEscuro from './components/FooterEscuro';
 
  class App extends Component {
 
@@ -23,12 +22,9 @@ import FooterEscuro from './components/FooterEscuro';
         <Header />
         <div className="App">
           <Switch>
-            <Route path="/" render={ () => <Home /> }/>
+            <Route exact path="/login" component={Login} />
+            <Route path="/" component={Home}/>
           </Switch>
-       
-        { window.location.pathname === "/form" ? 
-              <FooterEscuro /> : <FooterAzul isWithButton={true}/>
-        }
          </div>
       </BrowserRouter>
     );

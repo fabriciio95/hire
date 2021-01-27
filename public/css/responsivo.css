@@ -1,4 +1,5 @@
 /* Responsivo*/
+/*Tablet*/
 @media only screen and (min-width: 788px) and (max-width: 979px) {
   .header {
     position: relative;
@@ -75,8 +76,18 @@
     color: #e77448;
     font-size: 14px;
   }
+
+  /* form */
+  .form {
+    margin: 60px auto 60px 200px;
+  }
+
+  .label-form {
+    padding-left: 50px;
+  }
 }
 
+/*Mobile*/
 @media only screen and (min-width: 321px) and (max-width: 787px) {
   /* Header */
   .header {
@@ -158,7 +169,7 @@
   /*Footer azul*/
 
   .txt-footer {
-    width: 345px;
+    width: 330px;
     font-size: 22px;
     padding-left: 10px;
   }
@@ -196,8 +207,22 @@
     text-align: left;
     padding-right: 35px;
   }
+
+  /* Form */
+  .form {
+    margin: 60px auto 60px auto;
+  }
+
+  .label-form {
+    padding-left: 40px;
+  }
+
+  .texto-form {
+    font-size: 12px;
+  }
 }
 
+/*Mobile menor */
 @media only screen and (max-width: 320px) {
   /* Header */
   .header {
@@ -320,5 +345,18 @@
   .txt-footer-escuro {
     text-align: left;
     padding-right: 5px;
+  }
+
+  /* Form */
+  .form {
+    margin: 60px auto 60px auto;
+  }
+
+  .label-form {
+    padding-left: 40px;
+  }
+
+  .texto-form {
+    font-size: 12px;
   }
 }

@@ -8,7 +8,7 @@ class Header extends Component {
     super(props);
     this.state = {
       items: [
-        { name: "Entre", href: "/" }
+        { name: "Entre", href: "/login" }
       ], 
       itemsLogado: [
         { name: "Buscar", href: "/form/2" },
