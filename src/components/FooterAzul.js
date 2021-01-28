@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class FooterAzul extends Component {  
   render() {
@@ -14,7 +15,7 @@ class FooterAzul extends Component {
           </p>
             {this.props.isWithButton ? 
             <div>
-              <a href="/" className="grid-7 btn-footer">Quero me cadastrar</a>
+              <Link to="/cadastro" className="grid-7 btn-footer">Quero me cadastrar</Link>
               <a href="/" className="grid-7 btn-footer bg-footer-azul-direito ">Quero contratar</a>
             </div>  :
               "" }

@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Login'
 import Header from './components/Header';
+import Cadastro from './components/Cadastro';
 
  class App extends Component {
 
@@ -23,6 +24,7 @@ import Header from './components/Header';
         <div className="App">
           <Switch>
             <Route exact path="/login" component={Login} />
+            <Route exact path="/cadastro" component={Cadastro}/>
             <Route path="/" component={Home}/>
           </Switch>
          </div>
