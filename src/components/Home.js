@@ -13,13 +13,13 @@ class Home extends Component {
           <div className="introducao-home-primeiro">
               <h1 className="introducao-title">Precisa de uma ajuda?</h1>
               <h2 className="introducao-sub-title">Encontre na <span className="logo-text">Hire</span> </h2>
-              <a href="/" className="btn btn-introducao">Começar</a>
+              <Link to="/busca" className="btn btn-introducao">Começar</Link>
           </div> :
           <ul data-slide="principal">
             <li className="introducao-home-primeiro" key="1">
               <h1 className="introducao-title">Precisa de uma ajuda?</h1>
               <h2 className="introducao-sub-title">Encontre na <span className="logo-text">Hire</span> </h2>
-              <a href="/" className="btn btn-introducao">Começar</a>
+              <Link to="/busca" className="btn btn-introducao">Começar</Link>
             </li>
             
             <li className="introducao-home-segundo" key="2">

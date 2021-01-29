@@ -16,7 +16,7 @@ class FooterAzul extends Component {
             {this.props.isWithButton ? 
             <div>
               <Link to="/cadastro" className="grid-7 btn-footer">Quero me cadastrar</Link>
-              <a href="/" className="grid-7 btn-footer bg-footer-azul-direito ">Quero contratar</a>
+              <Link to="/busca" className="grid-7 btn-footer bg-footer-azul-direito ">Quero contratar</Link>
             </div>  :
               "" }
           </div>
