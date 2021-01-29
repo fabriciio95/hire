@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import FooterAzul from './FooterAzul';
+import Alert from './Alert';
 
 class Cadastro extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      error: { message: "Usuário ou senha inválidos! Por favor verifique o que digitou nos campos usuários e senhas e tente novamente! Desde já muito obrigado!" }
+     }
     this.dadosPerfilHandler = this.dadosPerfilHandler.bind(this);
   }
 
@@ -18,9 +22,17 @@ class Cadastro extends Component {
     const value = event.target.value;
     if(value === "Ser Contratado" || value === "Ambos") {
       document.getElementById("dados-perfil").style.display = "block";
-      document.getElementById("form-cadastro").style.height = "1060px";
+      if(this.state.error.message) {
+        document.getElementById("form-cadastro").style.height = "1170px";
+      } else {
+        document.getElementById("form-cadastro").style.height = "1100px";
+      }
     } else {
-      document.getElementById("form-cadastro").style.height = "610px";
+      if(this.state.error.message) {
+        document.getElementById("form-cadastro").style.height = "710px";
+      } else {
+        document.getElementById("form-cadastro").style.height = "640px";
+      }
       document.getElementById("dados-perfil").style.display = "none";
     }
   }
@@ -35,17 +47,18 @@ class Cadastro extends Component {
           </div>
         </section>
         <section className="container">
-          <form className="form form-cadastro grid-9" id="form-cadastro">
+          <form className={`form form-cadastro grid-9 ${this.state.error.message ? "form-alert-cadastro" : ""}`} id="form-cadastro">
             <h1 className="title-form">Cadastro</h1>
-            <label htmlFor="nome" className="label-form" >Nome</label>
+            { this.state.error.message ? <Alert message={this.state.error.message} error={false} /> : "" }
+            <label htmlFor="nome" className={`label-form ${this.state.error.message ? "" : "label-alert"}`} >Nome</label>
             <input type="text" id="nome" className="txt-form" required />
             <label htmlFor="usuario" className="label-form" >Usuário</label>
             <input type="text" id="usuario" className="txt-form" required />
             <label htmlFor="senha" className="label-form">Senha</label>
             <input type="password" id="senha" className="txt-form" required />
-            <label htmlFor="foto" className="label-form label-inline">Foto: </label>
+            <label htmlFor="foto" className="label-form">Foto: </label>
             <input type="file" id="foto" className="input-file-form"/>
-            <label htmlFor="select" className="label-form label-inline">Eu vou: </label>
+            <label htmlFor="select" className="label-form">Eu vou: </label>
             <select id="select" name="select-form" className="select-form" onChange={e => this.dadosPerfilHandler(e)}>
               <option>Contratar</option>
               <option>Ser Contratado</option>

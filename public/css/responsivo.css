@@ -91,10 +91,6 @@
     margin: 60px auto 60px 200px;
   }
 
-  .form-cadastro {
-    height: 640px;
-  }
-
   .label-form {
     padding-left: 50px;
   }
@@ -107,7 +103,6 @@
 
   .input-file-form {
     font-size: 14px;
-    margin: 0 0 30px 0px;
   }
 
   .select-form {
@@ -258,10 +253,6 @@
     margin: 60px auto 60px auto;
   }
 
-  .form-cadastro {
-    height: 640px;
-  }
-
   .label-form {
     padding-left: 40px;
   }
@@ -270,15 +261,8 @@
     font-size: 12px;
   }
 
-  .label-inline {
-    padding-left: 40px;
-    display: block;
-    margin-bottom: 5px;
-  }
-
   .input-file-form {
     font-size: 11px;
-    margin: 0 0 30px 30px;
   }
 
   .select-form {
@@ -433,10 +417,6 @@
     margin: 60px auto 60px auto;
   }
 
-  .form-cadastro {
-    height: 640px;
-  }
-
   .label-form {
     padding-left: 40px;
   }
@@ -445,15 +425,8 @@
     font-size: 12px;
   }
 
-  .label-inline {
-    padding-left: 40px;
-    display: block;
-    margin-bottom: 5px;
-  }
-
   .input-file-form {
     font-size: 11px;
-    margin: 0 0 30px 30px;
   }
 
   .select-form {
