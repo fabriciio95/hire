@@ -8,6 +8,11 @@ class Busca extends Component {
     this.searchSubmitHandler = this.searchSubmitHandler.bind(this);
   }
 
+  componentDidMount(){
+    document.documentElement.scrollTop = 0; 
+    document.body.scrollTop = 0;
+  }
+
   searchSubmitHandler() {
     const result = document.getElementById("result-search").style.display;
     if(result === "none") { 
