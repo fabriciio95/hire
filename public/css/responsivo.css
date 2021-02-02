@@ -74,6 +74,36 @@
   .descricao-profissional {
     width: 215px;
   }
+
+  /*Conteúdo perfil*/
+  .introducao-perfil {
+    margin-top: 0;
+  }
+
+  .title-perfil {
+    font-size: 36px;
+  }
+
+  .title-perfil::after {
+    width: 70px;
+  }
+
+  .sub-title-perfil {
+    font-size: 32px;
+  }
+
+  .txt-comentario-avaliacao {
+    width: 68%;
+    height: 130px;
+  }
+
+  .nome-profissional-perfil {
+    font-size: 20px;
+  }
+
+  .dados-profissional-perfil {
+    font-size: 17px;
+  }
   /*Footer azul*/
   .txt-footer {
     width: 754px;
@@ -236,6 +266,70 @@
     width: 250px;
   }
 
+  /*Conteúdo perfil*/
+  .introducao-perfil {
+    margin-top: 0;
+  }
+
+  .title-perfil {
+    padding-top: 30px;
+    font-size: 28px;
+  }
+
+  .title-perfil::after {
+    width: 60px;
+  }
+
+  .sub-title-perfil {
+    font-size: 24px;
+    line-height: 36px;
+  }
+
+  .txt-comentario-avaliacao {
+    width: 220px;
+    height: 170px;
+    font-size: 14px;
+    margin: 20px auto 10px auto;
+  }
+
+  .foto-perfil-profissional {
+    width: 160px;
+    height: 140px;
+    text-align: center;
+    float: none;
+  }
+
+  .nome-profissional-perfil {
+    font-size: 16px;
+    margin: 10px;
+  }
+
+  .dados-profissional-perfil {
+    font-size: 14px;
+    margin: 10px;
+  }
+
+  .bg-perfil {
+    height: 800px;
+  }
+
+  .bg-id-perfil {
+    height: 550px;
+  }
+
+  .bg-comentario-avaliacao {
+    margin-left: auto;
+    height: 375px;
+    width: 250px;
+  }
+
+  .foto-nome-autor {
+    float: none;
+  }
+
+  .nome-autor-avaliacao {
+    margin-left: 65px;
+  }
   /*Footer azul*/
 
   .txt-footer {
@@ -414,6 +508,70 @@
     width: 250px;
   }
 
+  /*Conteúdo perfil*/
+  .introducao-perfil {
+    margin-top: 0;
+  }
+
+  .title-perfil {
+    padding-top: 30px;
+    font-size: 28px;
+  }
+
+  .title-perfil::after {
+    width: 60px;
+  }
+
+  .sub-title-perfil {
+    font-size: 24px;
+    line-height: 36px;
+  }
+
+  .txt-comentario-avaliacao {
+    width: 220px;
+    height: 170px;
+    font-size: 14px;
+    margin: 20px auto 10px auto;
+  }
+
+  .foto-perfil-profissional {
+    width: 160px;
+    height: 140px;
+    text-align: center;
+    float: none;
+  }
+
+  .nome-profissional-perfil {
+    font-size: 16px;
+    margin: 10px;
+  }
+
+  .dados-profissional-perfil {
+    font-size: 14px;
+    margin: 10px;
+  }
+
+  .bg-perfil {
+    height: 800px;
+  }
+
+  .bg-id-perfil {
+    height: 550px;
+  }
+
+  .bg-comentario-avaliacao {
+    margin-left: auto;
+    height: 375px;
+    width: 250px;
+  }
+
+  .foto-nome-autor {
+    float: none;
+  }
+
+  .nome-autor-avaliacao {
+    margin-left: 65px;
+  }
   /*Footer azul*/
 
   .txt-footer {

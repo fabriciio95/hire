@@ -44,7 +44,7 @@ class Busca extends Component {
                     <span className="preco-hora">R$ 40/h</span>
                     <span className="nome-profissional">Elize Cristiane</span>
                     <span className="descricao-profissional">manicure, pedicure faxina, limpeza, tarefas de casa.</span>
-                    <Link to="/" className="btn-card-profissional">ver mais</Link>
+                    <Link to="/perfil" className="btn-card-profissional">ver mais</Link>
                 </li>
                 <li className="cards-profissional grid-5">
                     <div className="bg-foto-profissional">
@@ -53,7 +53,7 @@ class Busca extends Component {
                     <span className="preco-hora">R$ 40/h</span>
                     <span className="nome-profissional">Elize Cristiane</span>
                     <span className="descricao-profissional">manicure, pedicure faxina, limpeza, tarefas de casa.</span>
-                    <Link to="/" className="btn-card-profissional">ver mais</Link>
+                    <Link to="/perfil" className="btn-card-profissional">ver mais</Link>
                 </li>
                 <li className="cards-profissional grid-5">
                     <div className="bg-foto-profissional">
@@ -62,7 +62,7 @@ class Busca extends Component {
                     <span className="preco-hora">R$ 40/h</span>
                     <span className="nome-profissional">Elize Cristiane</span>
                     <span className="descricao-profissional">manicure, pedicure faxina, limpeza, tarefas de casa.</span>
-                    <Link to="/" className="btn-card-profissional">ver mais</Link>
+                    <Link to="/perfil" className="btn-card-profissional">ver mais</Link>
                 </li>
                 <li className="cards-profissional grid-5">
                     <div className="bg-foto-profissional">
@@ -71,7 +71,7 @@ class Busca extends Component {
                     <span className="preco-hora">R$ 40/h</span>
                     <span className="nome-profissional">Elize Cristiane</span>
                     <span className="descricao-profissional">manicure, pedicure faxina, limpeza, tarefas de casa.</span>
-                    <Link to="/" className="btn-card-profissional">ver mais</Link>
+                    <Link to="/perfil" className="btn-card-profissional">ver mais</Link>
                 </li>
                 <li className="cards-profissional grid-5">
                     <div className="bg-foto-profissional">
@@ -80,7 +80,7 @@ class Busca extends Component {
                     <span className="preco-hora">R$ 40/h</span>
                     <span className="nome-profissional">Elize Cristiane</span>
                     <span className="descricao-profissional">manicure, pedicure faxina, limpeza, tarefas de casa.</span>
-                    <Link to="/" className="btn-card-profissional">ver mais</Link>
+                    <Link to="/perfil" className="btn-card-profissional">ver mais</Link>
                 </li>
                 <li className="cards-profissional grid-5">
                     <div className="bg-foto-profissional">
@@ -89,7 +89,7 @@ class Busca extends Component {
                     <span className="preco-hora">R$ 40/h</span>
                     <span className="nome-profissional">Elize Cristiane</span>
                     <span className="descricao-profissional">manicure, pedicure faxina, limpeza, tarefas de casa.</span>
-                    <Link to="/" className="btn-card-profissional">ver mais</Link>
+                    <Link to="/perfil" className="btn-card-profissional">ver mais</Link>
                 </li>
               </ul>
           </div>

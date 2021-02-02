@@ -311,6 +311,7 @@
   width: 25px;
   border-radius: 50%;
   animation: is-rotating 1s infinite;
+  margin: 0 auto;
 }
 
 @keyframes is-rotating {

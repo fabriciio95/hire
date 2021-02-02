@@ -6,6 +6,7 @@ import Login from './components/Login'
 import Header from './components/Header';
 import Cadastro from './components/Cadastro';
 import Busca from './components/Busca';
+import Perfil from './components/Perfil';
 
  class App extends Component {
 
@@ -27,6 +28,7 @@ import Busca from './components/Busca';
             <Route exact path="/login" component={Login} />
             <Route exact path="/cadastro" component={Cadastro}/>
             <Route exact path="/busca" component={Busca}/>
+            <Route exact path="/perfil" component={Perfil}/>
             <Route path="/" component={Home}/>
           </Switch>
          </div>
