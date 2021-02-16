@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import FooterEscuro from './FooterEscuro';
 import Loader from './Loader'
+import AuthService from '../api/AuthService';
+import { Redirect } from 'react-router-dom';
+
 
 class Perfil extends Component {
 
@@ -39,6 +42,9 @@ class Perfil extends Component {
   }
 
   render() {
+    if(!AuthService.isAuthenticated()) {
+        return ( <Redirect to="/login" /> )
+    }
     return (
       <div>
         <section className="introducao-perfil">
@@ -101,10 +107,12 @@ class Perfil extends Component {
               <textarea className="txt-comentario-avaliacao" readOnly defaultValue="Muito educada e trabalha super bem, a faxina aqui em casa foi muito bem feita, eu recomendo e contrataria novamente"/>
             </li>
           </ul>
-
+        
         </section>
         <FooterEscuro />
+      
       </div>
+       
     );
   }
 }

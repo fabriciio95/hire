@@ -25,7 +25,7 @@ import Perfil from './components/Perfil';
         <Header />
         <div className="App">
           <Switch>
-            <Route exact path="/login" component={Login} />
+            <Route exact path="/login" render={(props) => <Login {...props}/>} />
             <Route exact path="/cadastro" component={Cadastro}/>
             <Route exact path="/busca" component={Busca}/>
             <Route exact path="/perfil" component={Perfil}/>

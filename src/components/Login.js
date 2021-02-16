@@ -1,27 +1,40 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Alert from './Alert';
 import FooterEscuro from './FooterEscuro';
+import AuthService from '../api/AuthService';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-     error: { message: "Usuário ou senha inválidos! Por favor verifique o que digitou nos campos usuários e senhas e tente novamente! Desde já muito obrigado!" }
+     alert: "",
+     showAlertCadastro : false
     }
   }
   
+  componentDidMount(){
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    if(this.props.location.state && this.props.location.state.alert) {
+      this.setState({ alert : this.props.location.state.alert , showAlertVerde : true });
+    } 
+  }
 
   render() {
+    if(AuthService.isAuthenticated()) {
+      return ( <Redirect to="/busca" />)
+    }
     return (
       <div>
       <section className="container">
-        <form className={`form grid-9 ${this.state.error.message ? "form-alert" : ""}`}>
+        <form className={`form grid-9 ${this.state.alert ? "form-alert" : ""}`}>
           <h1 className="title-form">Entrar</h1>
-         { this.state.error.message ? <Alert message={this.state.error.message} error={true} /> : "" }
-          <label for="usuario" className={`label-form ${this.state.error.message ? "" : "label-alert"}`} >Usuário</label>
+         { this.state.alert ? <Alert message={this.state.alert} error={this.state.showAlertVerde
+               ? false : true} /> : "" }
+          <label htmlFor="usuario" className={`label-form ${this.state.alert ? "" : "label-alert"}`} >Usuário</label>
           <input type="text" id="usuario" className="txt-form" required />
-          <label for="senha" className="label-form">Senha</label>
+          <label htmlFor="senha" className="label-form">Senha</label>
           <input type="password" id="senha" className="txt-form" required />
           <input type="submit" value="Entrar" className="btn-form" />
           <p className="texto-form">

@@ -37,7 +37,6 @@
 .result-search {
   width: 100%;
   background-color: #ededed;
-  height: 1000px;
   display: none;
 }
 
@@ -45,7 +44,7 @@
   height: 400px;
   border: #172a64 solid 1px;
   border-radius: 3%;
-  margin-top: 60px;
+  margin: 60px 25px 0 0;
   background-color: #ffffff;
 }
 
@@ -58,7 +57,8 @@
 .img-profissional {
   border-radius: 2%;
   height: 208px;
-  margin-top: 15px;
+  width: 270px;
+  margin: 15px auto 0 auto;
 }
 
 .preco-hora {
@@ -104,4 +104,8 @@
 .btn-card-profissional:hover {
   background-color: #132353;
   border-radius: 3%;
+}
+
+ul.ul-cards li:last-child {
+  margin-bottom: 60px;
 }

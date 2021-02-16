@@ -75,6 +75,10 @@
     width: 215px;
   }
 
+  .cards-profissional {
+    margin-right: 20px;
+  }
+
   /*Conteúdo perfil*/
   .introducao-perfil {
     margin-top: 0;
@@ -251,10 +255,6 @@
   /*CONTEÚDO BUSCA*/
   .introducao-busca {
     margin-top: 0;
-  }
-
-  .result-search {
-    height: 2830px;
   }
 
   .introducao-title {
@@ -493,10 +493,6 @@
   /*CONTEÚDO BUSCA*/
   .introducao-busca {
     margin-top: 0;
-  }
-
-  .result-search {
-    height: 2830px;
   }
 
   .introducao-title {
