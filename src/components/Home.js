@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import AuthService from '../api/AuthService';
 import FooterAzul from './FooterAzul'
 
 
@@ -10,12 +9,6 @@ class Home extends Component {
     return (
       <div>
         <section>
-          {AuthService.isAuthenticated() ? 
-          <div className="introducao-home-primeiro">
-              <h1 className="introducao-title">Precisa de uma ajuda?</h1>
-              <h2 className="introducao-sub-title">Encontre na <span className="logo-text">Hire</span> </h2>
-              <Link to="/busca" className="btn btn-introducao">Começar</Link>
-          </div> :
           <ul data-slide="principal">
             <li className="introducao-home-primeiro" key="1">
               <h1 className="introducao-title">Precisa de uma ajuda?</h1>
@@ -33,7 +26,7 @@ class Home extends Component {
               <h2 className="introducao-sub-title">E entre para a familia <span className="logo-text">Hire</span> </h2>
               <Link to="/cadastro" className="btn btn-introducao">Cadastrar</Link>
             </li>
-          </ul> } 
+          </ul> 
       </section>
       <section className="container">
         <h1 className="conteudo-title">Quem somos?</h1>

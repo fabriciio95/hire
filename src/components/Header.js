@@ -11,11 +11,16 @@ class Header extends Component {
         { name: "Entre", href: "/login" }
       ], 
       itemsLogado: [
-        { name: "Buscar", href: "/form/2" },
-        { name: "Minha Conta", href: "/form" },
-        { name: "Sair", href: "/" }
-      ]
+        { name: "Buscar", href: "/busca" },
+        { name: "Minha Conta", href: "/cadastro" }
+      ],
     }
+    this.onLogoutHandler = this.onLogoutHandler.bind(this);
+  }
+
+  onLogoutHandler() {
+    AuthService.logout();
+    this.props.onLinkClick();
   }
 
 
@@ -28,7 +33,9 @@ class Header extends Component {
               <ul>
                   {AuthService.isAuthenticated() ?
                    this.state.itemsLogado.map(item => <HeaderItem item={item} key={item.name} />) : 
-                   this.state.items.map(item => <HeaderItem item={item} key={item.name} /> )}
+                   this.state.items.map(item => <HeaderItem item={item} key={item.name} />)}
+                   {AuthService.isAuthenticated() ? 
+                    <HeaderItem item={{name : "Sair", href: "#"}} onClick={this.onLogoutHandler}/> : ""};
               </ul>
             </nav>
         </div>

@@ -8,7 +8,8 @@ class HeaderItem extends Component {
   render() {
     return (
       <li>
-        <Link className="btn" to={this.props.item.href}>{this.props.item.name}</Link>
+        <Link className="btn" to={this.props.item.href} 
+              onClick={e => this.props.onClick ? this.props.onClick() : ""}>{this.props.item.name}</Link>
       </li>
     );
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FooterAzul from './FooterAzul';
+import AuthService from "../api/AuthService"
 import Alert from './Alert';
 import Loader from './Loader'
 import CrudService from '../api/crudService';
@@ -125,6 +126,9 @@ class Cadastro extends Component {
   }
 
   render() {
+    if(AuthService.isAuthenticated()) {
+      return ( <Redirect to="/busca" /> )
+    }
     if(this.state.redirect) {
      return (
         <Redirect to={
