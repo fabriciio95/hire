@@ -29,6 +29,7 @@ import Perfil from './components/Perfil';
             <Route exact path="/login" render={(props) => <Login {...props}
              onLoginSuccess={this.onRefreshHandler}/>} />
             <Route exact path="/cadastro" component={Cadastro}/>
+            <Route exact path="/cadastro/:id" render={(props) => <Cadastro {...props} edit={true} />} />
             <Route exact path="/busca" component={Busca}/>
             <Route exact path="/perfil" component={Perfil}/>
             <Route path="/" component={Home}/>

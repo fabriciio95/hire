@@ -10,7 +10,7 @@ class Login extends Component {
     super(props);
     this.state = {
      alert: "",
-     showAlertCadastro : false,
+     showAlertErro : true,
      loading : false,
      loggedIn : false, 
      usuario : "",
@@ -24,7 +24,7 @@ class Login extends Component {
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
     if(this.props.location.state && this.props.location.state.alert) {
-      this.setState({ alert : this.props.location.state.alert , showAlertVerde : true });
+      this.setState({ alert : this.props.location.state.alert , showAlertErro : false });
     } 
   }
 
@@ -43,7 +43,7 @@ class Login extends Component {
             this.setState({ loggedIn : true, loading: false });
             this.props.onLoginSuccess();
           } else {
-              this.setState({ alert : "Usuário ou senha inválidos", loading : false });
+              this.setState({ alert : "Usuário ou senha inválidos",  showAlertErro : true,  loading : false });
           }
         });
   }
@@ -57,8 +57,7 @@ class Login extends Component {
       <section className="container">
         <form onSubmit={this.onSubmitLoginHandler} className={`form grid-9 ${this.state.alert ? "form-alert" : ""}`}>
           <h1 className="title-form">Entrar</h1>
-         { this.state.alert ? <Alert message={this.state.alert} error={this.state.showAlertVerde
-               ? false : true} /> : "" }
+         { this.state.alert ? <Alert message={this.state.alert} error={this.state.showAlertErro} /> : "" }
           <label htmlFor="usuario" className={`label-form ${this.state.alert ? "" : "label-alert"}`} >Usuário</label>
           <input type="text" id="usuario" className="txt-form" required  name="usuario"
               onChange={e => this.onInputChangeHandler(e)} />

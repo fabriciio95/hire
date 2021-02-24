@@ -5,16 +5,20 @@ import Alert from './Alert';
 import Loader from './Loader'
 import CrudService from '../api/crudService';
 import { Redirect } from 'react-router-dom';
+import crudService from '../api/crudService';
 
 class Cadastro extends Component {
-
+  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
-      error: "",
+      alert: "",
+      showAlertErro : false,
       loading : false, 
+      saving : false,
       redirect : false, 
       usuario : {
+        id : "",
         usuario : "",
         senha : "",
         nome : "",
@@ -35,23 +39,75 @@ class Cadastro extends Component {
     this.onSetError = this.onSetError.bind(this);
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+}
   componentDidMount(){
+    this._isMounted = true;
+    const editId = this.props.match.params.id;
+    if(editId) {
+        this.setState({ loading: true, usuario : { id : editId  }});
+        crudService.getUsuarioProfissional(editId, 
+          usuarioProfisional => {
+            if(this._isMounted) { 
+              this.setState({ usuario : usuarioProfisional, loading : false});
+              document.getElementById("senha").required = false;
+              document.getElementById("foto").required = false;
+              if(usuarioProfisional.euQuero !== "CONTRATAR") {
+                document.getElementById("dados-perfil").style.display = "block";
+                document.getElementById("select").value = "AMBOS";
+                document.getElementById("endereco").required = true;
+                document.getElementById("telefone").required = true;
+                document.getElementById("email").required = true;
+                document.getElementById("valor").required = true;
+                document.getElementById("descricao").required = true;
+              }
+            }
+          }, 
+          error => {
+            if(error.response) {
+              if(error.response.status === 404) {
+                this.setState({ error : "Usuário não encontrado", loading : false });
+              } else {
+                this.setState({ error : `Erro: ${error.response.data.error}`})
+              }
+            } else {
+              this.setState({ error : `Erro na requisição: ${error.message} `})
+            }
+          })
+    }
     document.documentElement.scrollTop = 0; 
     document.body.scrollTop = 0;
   }
 
   onSubmitHandler(event){
     event.preventDefault();
-    this.setState({ alert : "", loading : true });
+    this.setState({ alert : "", saving : true });
     var euQuero = document.getElementById("select").value;
     if( euQuero === "Contratar") {
-        CrudService.cadastrarUsuario(this.state.usuario, 
-          () => this.setState({loading: false, redirect : true}), 
-          error => this.onSetError(error));
+        if(this.state.usuario.id) {
+            CrudService.atualizarUsuario(this.state.usuario, 
+              () => this.setState({ saving : false, alert : "Atualização feita com sucesso!", 
+              showAlertErro : false}), 
+              error => this.onSetError(error));
+        } else {
+          CrudService.cadastrarUsuario(this.state.usuario, 
+            () => this.setState({saving: false, redirect : true}), 
+            error => this.onSetError(error));
+        }
     } else {
+       if(this.state.usuario.id) {
+            CrudService.atualizarProfissional(this.state.usuario, 
+              () => this.setState({ saving : false, alert : "Atualização feita com sucesso!",
+               showAlertErro : false}),
+              error => this.onSetError(error));
+              document.documentElement.scrollTop = 0; 
+              document.body.scrollTop = 0;
+        } else {
       CrudService.cadastrarProfissional(this.state.usuario,
-        () => this.setState({ loading : false, redirect : true}),
+        () => this.setState({ saving : false, redirect : true}),
         error => this.onSetError(error));
+      }
     }
   }
 
@@ -64,12 +120,12 @@ class Cadastro extends Component {
        for(var i = 0; i < campos.length; i++){
           messageError += campos[i].mensagem;
        }
-       this.setState({ error : `Erro: ${messageError}`, loading : false});
+       this.setState({ alert : `Erro: ${messageError}`, showAlertErro : true, saving : false});
       } else {
-        this.setState({ error : `Erro: ${error.response.data.titulo}`, loading : false});
+        this.setState({ alert : `Erro: ${error.response.data.titulo}`, showAlertErro : true, saving : false});
       }
     } else {
-      this.setState({error : `Erro na requisão: ${error.message}`, loading : false})
+      this.setState({ alert : `Erro na requisão: ${error.message}`, showAlertErro : true, saving : false})
     }
     document.documentElement.scrollTop = 0; 
     document.body.scrollTop = 0;
@@ -126,8 +182,8 @@ class Cadastro extends Component {
   }
 
   render() {
-    if(AuthService.isAuthenticated()) {
-      return ( <Redirect to="/busca" /> )
+    if(AuthService.isAuthenticated() && !this.props.edit) {
+      return  (<Redirect to="/busca" /> );
     }
     if(this.state.redirect) {
      return (
@@ -144,19 +200,20 @@ class Cadastro extends Component {
               <h2 className="introducao-sub-title-cadastro">Crie um perfil gratuito para desbloquear oportunidades para você ou para aqueles que mais precisam.</h2>
           </div>
         </section>
+        {this.state.loading ? <Loader /> : 
         <section className="container">
           <form className={`form form-cadastro grid-9 ${this.state.error ? "form-alert-cadastro" : ""}`} id="form-cadastro"   onSubmit={this.onSubmitHandler}>
             <h1 className="title-form">Cadastro</h1>
-            { this.state.error ? <Alert message={this.state.error} error={true} /> : "" }
+            { this.state.alert ? <Alert message={this.state.alert} error={this.state.showAlertErro} /> : "" }
             <label htmlFor="nome" className={`label-form ${this.state.error ? "" : "label-alert"}`} >Nome</label>
-            <input type="text" id="nome" className="txt-form" required 
-                onChange={event => this.onInputUsuarioChangeHandle(event)} name="nome"/>
+            <input type="text" id="nome" className="txt-form" required  value={this.state.usuario.nome}
+                onChange={event => this.onInputUsuarioChangeHandle(event)} name="nome" />
             <label htmlFor="usuario" className="label-form" >Usuário</label>
-            <input type="text" id="usuario" className="txt-form" required 
+            <input type="text" id="usuario" className="txt-form" required value={this.state.usuario.usuario}
                 onChange={event => this.onInputUsuarioChangeHandle(event)}  name="usuario"/>
             <label htmlFor="senha" className="label-form">Senha</label>
             <input type="password" id="senha" className="txt-form" required  autoComplete = "senha atual"
-                onChange={event => this.onInputUsuarioChangeHandle(event)} name="senha"/>
+               onChange={event => this.onInputUsuarioChangeHandle(event)} name="senha" />
             <label htmlFor="foto" className="label-form">Foto: </label>
             <input type="file" id="foto" className="input-file-form"
                   onChange={event => this.onInputFotoChangeHandle(event)} required />
@@ -169,28 +226,28 @@ class Cadastro extends Component {
             </select>
             <div className="form-dados-perfil" id="dados-perfil">
               <label htmlFor="endereco" className="label-form" >Endereço</label>
-              <input type="text" id="endereco" className="txt-form"  
+              <input type="text" id="endereco" className="txt-form"  value={this.state.usuario.endereco}
                   onChange={event => this.onInputUsuarioChangeHandle(event)} name="endereco"/>
               <label htmlFor="telefone" className="label-form" >Telefone</label>
-              <input type="text" id="telefone" className="txt-form"  
+              <input type="text" id="telefone" className="txt-form"  value={this.state.usuario.telefone}
                    onChange={event => this.onInputUsuarioChangeHandle(event)} name="telefone"/>
               <label htmlFor="email" className="label-form" >E-mail</label>
-              <input type="email" id="email" className="txt-form"  
+              <input type="email" id="email" className="txt-form"  value={this.state.usuario.email}
                    onChange={event => this.onInputUsuarioChangeHandle(event)} name="email"/>
               <label htmlFor="valor" className="label-form" >Valor/Hora</label>
-              <input type="text" id="valor" className="txt-form"  
+              <input type="text" id="valor" className="txt-form"  value={this.state.usuario.valorHora}
                      onChange={event => this.onInputUsuarioChangeHandle(event)} name="valorHora" />
               <label htmlFor="descricao" className="label-form" >Descrição</label>
-              <textarea id="descricao" className="txt-area-form"
+              <textarea id="descricao" className="txt-area-form" value={this.state.usuario.descricao}
                placeholder="Ex: faxina, manicure, fotografia, etc..."  
                onChange={event => this.onInputUsuarioChangeHandle(event)} name="descricao"></textarea>
             </div>
-            <button type="submit" className="btn-form btn-form-cadastro" disabled={this.state.loading}>
-                {this.state.loading ? 
+            <button type="submit" className="btn-form btn-form-cadastro" disabled={this.state.saving}>
+                {this.state.saving ? 
                 <Loader /> : "Salvar"}
             </button>
           </form>
-        </section>
+        </section> }
         <FooterAzul isWithButton={false}/>
       </div>
     );

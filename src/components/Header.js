@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import AuthService from '../api/AuthService';
 import HeaderItem from './HeaderItem';
 
@@ -11,13 +12,13 @@ class Header extends Component {
         { name: "Entre", href: "/login" }
       ], 
       itemsLogado: [
-        { name: "Buscar", href: "/busca" },
-        { name: "Minha Conta", href: "/cadastro" }
+        { name: "Buscar", href: "/busca" }
       ],
     }
     this.onLogoutHandler = this.onLogoutHandler.bind(this);
   }
 
+  
   onLogoutHandler() {
     AuthService.logout();
     this.props.onLinkClick();
@@ -25,6 +26,9 @@ class Header extends Component {
 
 
   render() {
+    if(this.state.logoff) {
+      return <Redirect to="/busca"/> ;
+    }
     return (
       <header className="header">
           <div className="container">
@@ -34,9 +38,11 @@ class Header extends Component {
                   {AuthService.isAuthenticated() ?
                    this.state.itemsLogado.map(item => <HeaderItem item={item} key={item.name} />) : 
                    this.state.items.map(item => <HeaderItem item={item} key={item.name} />)}
-                   {AuthService.isAuthenticated() ? 
-                    <HeaderItem item={{name : "Sair", href: "#"}} onClick={this.onLogoutHandler}/> : ""};
-              </ul>
+                    {AuthService.isAuthenticated() ? 
+                      <HeaderItem item={{name : "Minha Conta", href : `/cadastro/${AuthService.getJWTTokenData() ? AuthService.getJWTTokenData().userId : ""}`}} /> : ""} 
+                      {AuthService.isAuthenticated() ? 
+                       <HeaderItem item={{name : "Sair", href: "/busca"}} onClick={this.onLogoutHandler}/> : ""} 
+               </ul>
             </nav>
         </div>
       </header>
