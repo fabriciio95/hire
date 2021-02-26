@@ -127,8 +127,8 @@ class Cadastro extends Component {
     } else {
       this.setState({ alert : `Erro na requisão: ${error.message}`, showAlertErro : true, saving : false})
     }
-    document.documentElement.scrollTop = 0; 
-    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 380; 
+    document.body.scrollTop = 380;
   }
 
   onInputUsuarioChangeHandle(event){

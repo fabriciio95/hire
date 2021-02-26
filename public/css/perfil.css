@@ -46,7 +46,7 @@
 
 .bg-id-perfil {
   background-color: #ffffff;
-  height: 380px;
+  height: auto;
   margin-top: 60px;
   border: #ededed solid 3px;
   border-radius: 5px;
@@ -57,6 +57,7 @@
   height: 272px;
   text-align: left;
   float: left;
+  border-radius: 3%;
 }
 
 .nome-profissional-perfil {
@@ -97,11 +98,12 @@
 .foto-autor-avaliacao {
   border-radius: 50%;
   height: 120px;
+  width: 140px;
   margin: 10px 20px 0 20px;
 }
 
 .txt-comentario-avaliacao {
-  width: 73%;
+  width: 71%;
   margin: 20px 10px auto 30px;
   height: 110px;
   border: none;
@@ -124,7 +126,7 @@
   letter-spacing: 0.1em;
   text-align: left;
   display: block;
-  margin: 5px auto 10px 20px;
+  margin: 5px auto 10px 31%;
 }
 
 ul.ul-comentarios li:last-child {
@@ -132,7 +134,7 @@ ul.ul-comentarios li:last-child {
 }
 
 .text-comentario-avalicao {
-  margin: 40px auto 0px 120px;
+  margin: 30px auto 0px 120px;
   padding: 10px;
   height: 100px;
   border: #172a64 solid 2px;

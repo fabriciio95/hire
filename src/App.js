@@ -31,7 +31,7 @@ import Perfil from './components/Perfil';
             <Route exact path="/cadastro" component={Cadastro}/>
             <Route exact path="/cadastro/:id" render={(props) => <Cadastro {...props} edit={true} />} />
             <Route exact path="/busca" component={Busca}/>
-            <Route exact path="/perfil" component={Perfil}/>
+            <Route exact path="/perfil/:id" render={(props) => <Perfil {...props} onRefreshHandler={this.onRefreshHandler} /> }/>
             <Route path="/" component={Home}/>
           </Switch>
          </div>

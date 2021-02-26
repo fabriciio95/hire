@@ -33,6 +33,18 @@ class CrudService {
          .catch(error => onError(error));
   }
 
+  getPerfilProfissional(id, onFecth, onError) {
+    axios.get(`http://localhost:8080/profissional/perfil/${id}`, this.buildHeaderAuthorization())
+         .then(response => onFecth(response.data))
+         .catch(error => onError(error));
+  }
+
+  fazerAvaliacao(avaliacao, onSuccess, onError) {
+    axios.post(`http://localhost:8080/avaliacao/publicar`, avaliacao, this.buildHeaderAuthorization())
+         .then((response) => onSuccess(response.data))
+         .catch(e => onError(e));
+  }
+
   buildHeaderAuthorization() {
     return {
       headers : {

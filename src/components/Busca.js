@@ -28,8 +28,15 @@ class Busca extends Component {
     this.setState({ loading : true, error: ""});
     BuscaService.searchByDescription(this.state.description, 
       prfs => {
-        this.setState({profissionais: prfs, loading: false})},
-      () => this.setState({ error : "Nenhum profissional encontrado!", loading: false}));
+        this.setState({profissionais: prfs, loading: false});
+        document.documentElement.scrollTop = 300;
+        document.body.scrollTop = 300;
+      },
+      () => {
+        this.setState({ error : "Nenhum profissional encontrado!", loading: false});
+        document.documentElement.scrollTop = 100;
+        document.body.scrollTop = 100;
+      });
       this.abrirSessaoDeDados();
   }
 
@@ -69,7 +76,7 @@ class Busca extends Component {
                     <span className="preco-hora">{p.valorHora}</span>
                     <span className="nome-profissional">{p.nome}</span>
                     <span className="descricao-profissional">{p.descricao}</span>
-                    <Link to="/perfil" className="btn-card-profissional">ver mais</Link>
+                    <Link to={`/perfil/${p.id}`} className="btn-card-profissional">ver mais</Link>
                 </li>
                 )}
               </ul>
