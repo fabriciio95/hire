@@ -1,5 +1,4 @@
 import './App.css';
-import { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Login'
@@ -7,37 +6,35 @@ import Header from './components/Header';
 import Cadastro from './components/Cadastro';
 import Busca from './components/Busca';
 import Perfil from './components/Perfil';
+import {AuthContext, useAuth} from './apiHooks/useAuth'
+import { AlertContext, useAlert } from './apiHooks/useAlert';
 
 
- class App extends Component {
+ const App = () => {
 
-  constructor(props) {
-    super(props);
-    this.onRefreshHandler = this.onRefreshHandler.bind(this);
-  }
+   const auth = useAuth();
+   const alert = useAlert();
 
-  onRefreshHandler(){
-    this.forceUpdate();
-  }
-
-   render() {
     return (
-      <BrowserRouter>
-        <Header onLinkClick={this.onRefreshHandler}/>
-        <div className="App">
-          <Switch>
-            <Route exact path="/login" render={(props) => <Login {...props}
-             onLoginSuccess={this.onRefreshHandler}/>} />
-            <Route exact path="/cadastro" component={Cadastro}/>
-            <Route exact path="/cadastro/:id" render={(props) => <Cadastro {...props} edit={true} />} />
-            <Route exact path="/busca" component={Busca}/>
-            <Route exact path="/perfil/:id" render={(props) => <Perfil {...props} onRefreshHandler={this.onRefreshHandler} /> }/>
-            <Route path="/" component={Home}/>
-          </Switch>
-         </div>
-      </BrowserRouter>
+      <AlertContext.Provider value={alert} >
+        <AuthContext.Provider value={auth}>
+          <BrowserRouter>
+            <Header />
+            <div className="App">
+              <Switch>
+                <Route exact path="/login" render={(props) => <Login {...props} />} />
+                <Route exact path="/cadastro" component={Cadastro}/>
+                <Route exact path="/cadastro/:id" render={(props) => <Cadastro {...props} edit={true} />} />
+                <Route exact path="/busca" component={Busca}/>
+                <Route exact path="/perfil/:id" render={(props) => <Perfil {...props} /> }/>
+                <Route path="/" component={Home}/>
+              </Switch>
+            </div>
+          </BrowserRouter>
+        </AuthContext.Provider>
+      </AlertContext.Provider>
     );
   }
-}
+
 
 export default App;

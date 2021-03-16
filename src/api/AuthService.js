@@ -1,5 +1,5 @@
 import axios from "axios";
-import { JWT_TOKEN_NAME } from "../constants";
+import { CREDENTIALS_NAME, JWT_TOKEN_NAME } from "../constants";
 
 class AuthService {
 
@@ -21,7 +21,7 @@ class AuthService {
   
 
   isAuthenticated(){
-    return sessionStorage.getItem(JWT_TOKEN_NAME) != null;
+    return sessionStorage.getItem(CREDENTIALS_NAME) != null;
   }
 
   logout(){

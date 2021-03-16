@@ -1,6 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { CREDENTIALS_NAME, JWT_TOKEN_NAME } from "../constants";
+import { useEffect, useState, createContext } from "react";
+import { CREDENTIALS_NAME} from "../constants";
+
+
+export const AuthContext = createContext();
 
 export const useAuth = () => {
   const [credentials, setCredentials] = useState({ id : null, token : null });
@@ -11,7 +14,7 @@ export const useAuth = () => {
     loadCredentials();
   }, []);
 
-  const login = async (usuario, senha) => {
+  const login = async (usuario, senha, onError) => {
     const dataUser = { usuario : usuario, senha : senha };
     setProcessing(true);
     try {
@@ -20,14 +23,14 @@ export const useAuth = () => {
       storeCredentials(token);
       setProcessing(false);
     } catch(error) {
-      setError("Usuário ou senha inválidos!");
       setProcessing(false);
+      onError(true);
     }
 
   }
 
  const storeCredentials = (token) => {
-   const tokenData = atob(token.split(".")[1]);
+   const tokenData = JSON.parse(atob(token.split(".")[1]));
    const credentials = { id : tokenData.userId, token : token };
    sessionStorage.setItem(CREDENTIALS_NAME, JSON.stringify(credentials));
    setCredentials(credentials);
@@ -49,5 +52,5 @@ export const useAuth = () => {
    return sessionStorage.getItem(CREDENTIALS_NAME) !== null;
  }
 
- return { login, logout, isAuthenticated, credentials, error, processing };
+ return { login, logout, isAuthenticated, setError, credentials, error, processing };
 }
