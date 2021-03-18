@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import FooterAzul from './FooterAzul'
 
 
 
-class Home extends Component {  
-  render() {
+const Home = () => {  
     return (
       <div>
         <section>
@@ -45,7 +44,6 @@ class Home extends Component {
       <FooterAzul isWithButton={true}/>
      </div>
     );
-  }
 }
 
 export default Home;

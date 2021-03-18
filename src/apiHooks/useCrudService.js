@@ -14,6 +14,7 @@ export const useCrudService = () => {
   const [error, setError] = useState(null);
   const [usuarioUpdated, setUsuarioUpdated] = useState(null);
   const [usuarioLoaded, setUsuarioLoaded] = useState(null);
+  const [avaliacaoLoaded, setAvaliacaoLoaded] = useState(null);
   
   
   const cadastrarUsuario = async (usuario) => {
@@ -123,15 +124,24 @@ export const useCrudService = () => {
     }
   }
 
-  const fazerAvaliacao = async (avaliacao) => {
+  const fazerAvaliacao = async (avaliacao, isThereError) => {
     setError(null);
     setSaving(true);
+    alert.zerarState();
     try {
-      await axios.post(`http://localhost:8080/avaliacao/publicar`, avaliacao,buildHeaderAuthorization());
+      var response = await axios.post(`http://localhost:8080/avaliacao/publicar`, avaliacao,
+      buildHeaderAuthorization());
+      setAvaliacaoLoaded(response.data);
       setSaving(false);
+      isThereError(false);
     } catch(error) {
       handleError(error);
+      isThereError(true);
     }
+  }
+
+  function clearAvaliacaoLoaded () {
+    setAvaliacaoLoaded(null);
   }
 
   const buildHeaderAuthorization = () => {
@@ -145,6 +155,7 @@ export const useCrudService = () => {
   const handleError = (error) => {
     console.log(error);
     setError(error);
+    alert.zerarState();
     if(error.response) {
       if(error.response.data.campos) {
         var messageError = "";
@@ -168,5 +179,5 @@ export const useCrudService = () => {
   }
 
   return {cadastrarUsuario, atualizarUsuario, cadastrarProfissional, atualizarProfissional, getPerfilProfissional, 
-        getUsuarioProfissional, fazerAvaliacao, clearUsuarioLoaded, error, saving, redirect, loading, usuarioLoaded, usuarioUpdated };
+        getUsuarioProfissional, fazerAvaliacao, clearUsuarioLoaded, clearAvaliacaoLoaded, error, saving, redirect, loading, usuarioLoaded, usuarioUpdated, avaliacaoLoaded };
 }

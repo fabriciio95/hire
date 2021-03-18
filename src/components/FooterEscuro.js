@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class FooterEscuro extends Component {  
-  render() {
+const FooterEscuro = () => {  
     return (
       <div>
         <section className="bg-footer-escuro">
@@ -23,6 +22,6 @@ class FooterEscuro extends Component {
       </div>
     );
   }
-}
+
 
 export default FooterEscuro;

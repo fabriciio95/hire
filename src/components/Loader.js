@@ -1,15 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Loader extends Component {
-  render() {
+const Loader = (props) => {
     return (
-      <div className={`${this.props.border ? "loader-border" : ""}`}>
-        <div className="loader">
-
+      <div className={`${props.border ? "loader-border" : ""}`}>
+        <div className={`loader ${props.big ? "loader-big" : ""}`}>
         </div>
       </div>
     );
-  }
 }
 
 export default Loader;

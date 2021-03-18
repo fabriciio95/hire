@@ -1,118 +1,112 @@
-import React, { Component } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import FooterEscuro from './FooterEscuro';
 import Loader from './Loader'
-import AuthService from '../api/AuthService';
 import { Redirect } from 'react-router-dom';
-import crudService from '../api/crudService';
 import Alert from './Alert'
+import { AlertContext } from '../apiHooks/useAlert';
+import { AuthContext } from '../apiHooks/useAuth';
+import { useCrudService } from '../apiHooks/useCrudService';
 
 
-class Perfil extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      processing: false,
-      loading : false,
-      saving : false,
-      alert : "",
-      profissional : {
-        id : "",
-        nome : "",
-        endereco : "",
-        telefone : "",
-        email : "",
-        descricao : "",
-        valorHora : "",
-        fotoBase64 : "",
-        avaliacoes : []
-      }, 
-      avaliacao : {
-        comentario : "",
-        idAutor : "", 
-        idProfissional : ""
-      }
-    }
-    this.submitContratarHandler = this.submitContratarHandler.bind(this);
-    this.submitComentarioHandler = this.submitComentarioHandler.bind(this);
-    this.doComentario = this.doComentario.bind(this);
-    this.onChangeComentario = this.onChangeComentario.bind(this);
-  }
+const Perfil = (props) => {
+  const [processing, setProcessing] = useState(false);
+  const alert = useContext(AlertContext);
+  const auth = useContext(AuthContext);
+  const useCrud = useCrudService();
+  const [profissional, setProfissional] = useState(null);
+  const [avaliacao, setAvaliacao] = useState({
+      comentario : "",
+      idAutor : auth.credentials.id, 
+      idProfissional : props.match.params.id
+    });
   
-  submitContratarHandler(){
-    this.setState({processing: true});
-    setTimeout(this.doComentario, 5000);
+  const submitContratarHandler = () => {
+    setAvaliacao({...avaliacao, comentario : ""});
+    alert.zerarState();
+    document.getElementById("div-comentario-avaliacao").style.display = "none"; 
+    setProcessing(true);
   }
 
-  doComentario(){
+  useEffect(() => {
+    if(processing === true) {
+      sleep();
+      doComentario();
+    }
+  }, [processing]);
+
+  function sleep() {
+    var cont = 0;
+      while(cont < 999999999) {
+        cont++;
+      }
+      cont = 0;
+      while(cont < 999999999) {
+        cont++;
+      }
+      cont = 0;
+      while(cont < 999999999) {
+        cont++;
+      }
+  }
+
+  const doComentario = () => {
     var resp = window.confirm("Obrigado por confiar na Hire! Avalie o nosso profissional para ajuda-lo a conseguir novas oportunidades.");
     if(resp === true) {
       document.getElementById("div-comentario-avaliacao").style.display = "block";
       document.documentElement.scrollTop = 1000;
       document.body.scrollTop = 1000;
     }
-    this.setState({processing: false});
+    setProcessing(false);
   }
 
-  onChangeComentario(event) {
-    var field = event.target.name;
-    var value = event.target.value;
-    this.setState(prevState => ({ avaliacao : {...prevState.avaliacao, [field] : value }}));
-    const idAutor = "idAutor";
-    this.setState(prevState => ({ avaliacao : {...prevState.avaliacao, [idAutor] :
-      AuthService.getJWTTokenData().userId}}));
-    const idProfi = this.props.match.params.id;
-    const idProfissional = "idProfissional";
-    this.setState(prevState => ({ avaliacao : {...prevState.avaliacao, [idProfissional] : idProfi }}));
-  }
-
-  submitComentarioHandler(event) {
+  const submitComentarioHandler = (event) => {
     event.preventDefault();
-    this.setState({saving: true});
-    crudService.fazerAvaliacao(this.state.avaliacao, 
-      (data) => {
-        this.state.profissional.avaliacoes.unshift(data);
-        this.setState({ saving : false, avaliacao : { comentario : "" }, alert : ""});
-        document.getElementById("div-comentario-avaliacao").style.display = "none";
-      }, 
-      error => { 
-        console.log(error.response.data);
-        if(error.response) {
-          if(error.response.data.campos) {
-            var messageError = "";
-           var campos = error.response.data.campos;
-           for(var i = 0; i < campos.length; i++){
-              messageError += campos[i].mensagem;
-           }
-           document.getElementById("txt-comentario").style.marginTop = "10px";
-           this.setState({ alert : `Erro: ${messageError}`, saving : false});
-          } else {
-            this.setState({ alert : `Erro: ${error.response.data.titulo}`, saving : false});
-          }
-        } else {
-          this.setState({ alert : `Erro: ${error.message}`, saving : false});
-        }
-      });
+    useCrud.fazerAvaliacao(avaliacao, (isThereError) => {
+      if(isThereError) {
+        document.getElementById("txt-comentario").style.marginTop = "10px";
+        document.documentElement.scrollTop = 1000;
+        document.body.scrollTop = 1000;
+      } else {
+        setAvaliacao({...avaliacao, comentario : ""});
+        alert.zerarState();
+        document.getElementById("div-comentario-avaliacao").style.display = "none"; 
+      }
+    });
   }
 
-  componentDidMount() {
-    const idProfi = this.props.match.params.id;
-    this.setState({ loading : true });
-    crudService.getPerfilProfissional(idProfi,
-      data => this.setState({ profissional : data, loading : false }),
-      error => console.log(error));
+  useEffect(() => {
+    if(useCrud.avaliacaoLoaded) {
+      profissional.avaliacoes.unshift(useCrud.avaliacaoLoaded);
+      useCrud.clearAvaliacaoLoaded();
+      alert.zerarState();
+    }
+    // eslint-disable-next-line
+  }, [useCrud.avaliacaoLoaded]);
+
+  useEffect(() =>  {
+    const idProfi = props.match.params.id;
+    useCrud.getPerfilProfissional(idProfi);
+    setAvaliacao({...avaliacao, idProfissional : props.match.params.id, idAutor :  auth.credentials.id });
+    alert.zerarState();
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-  }
+    // eslint-disable-next-line
+  }, []);
 
-  
-  render() {
-    if(!AuthService.isAuthenticated()) {
+  useEffect(() => {
+    if(useCrud.usuarioLoaded) {
+      setProfissional(useCrud.usuarioLoaded);
+      useCrud.clearUsuarioLoaded();
+    }
+    // eslint-disable-next-line
+  }, [useCrud.usuarioLoaded]);
+
+    if(!auth.isAuthenticated()) {
         return ( <Redirect to="/login" /> )
     }
     return (
       <div>
-         {this.state.loading ? <Loader /> : 
+         {useCrud.loading || profissional === null ? <Loader big={true}/> : 
          <div>
         <section className="introducao-perfil">
           <div className="container">
@@ -125,39 +119,39 @@ class Perfil extends Component {
               <h1 className="conteudo-title conteudo-title-perfil">Perfil</h1>
               <div className="bg-id-perfil grid-16">
                 <img alt="Foto do profissional" className="foto-perfil-profissional"
-                  src={this.state.profissional.fotoBase64}></img>
-                <span className="nome-profissional-perfil">{this.state.profissional.nome}</span>
-                <span className="dados-profissional-perfil">{this.state.profissional.endereco}</span>
-                <span className="dados-profissional-perfil">{this.state.profissional.telefone}</span>
-                <span className="dados-profissional-perfil">{this.state.profissional.email}</span>
-                <span className="dados-profissional-perfil">{this.state.profissional.descricao}</span>
-                <span className="dados-profissional-perfil dados-profissional-perfil-bold">{this.state.profissional.valorHora}</span>
-                <button type="submit" onClick={this.submitContratarHandler} className="btn-form"
-               disabled={this.state.processing}>
-               {this.state.processing ? <Loader /> : "Contratar"} </button>
+                  src={profissional.fotoBase64}></img>
+                <span className="nome-profissional-perfil">{profissional.nome}</span>
+                <span className="dados-profissional-perfil">{profissional.endereco}</span>
+                <span className="dados-profissional-perfil">{profissional.telefone}</span>
+                <span className="dados-profissional-perfil">{profissional.email}</span>
+                <span className="dados-profissional-perfil">{profissional.descricao}</span>
+                <span className="dados-profissional-perfil dados-profissional-perfil-bold">{profissional.valorHora}</span>
+                <button type="submit" onClick={submitContratarHandler} className="btn-form"
+               disabled={processing}>
+               {processing ? <Loader /> : "Contratar"} </button>
               </div>
           </div>
         </section>
         <section className="container">
           <h1 className="conteudo-title">Avaliações</h1>
-          { this.state.alert ? 
+          { alert.alert ? 
           <div className="margin-alert">
-           <Alert message={this.state.alert} error={true} />
+           <Alert message={alert.alert} error={true} />
           </div>
            : "" }
           <div className="div-comentario-avaliacao" id="div-comentario-avaliacao">
-            <form onSubmit={this.submitComentarioHandler}>
+            <form onSubmit={submitComentarioHandler}>
               <textarea placeholder="Avalie este profissional..." className="text-comentario-avalicao grid-12" 
-                  name="comentario" value={this.state.avaliacao.comentario} id="txt-comentario"
-                     onChange={e => this.onChangeComentario(e)} required/>
+                  name="comentario" value={avaliacao.comentario} id="txt-comentario"
+                     onChange={e => setAvaliacao({...avaliacao, comentario : e.target.value})} required/>
               <button type="submit" className="btn-comentario-avaliacao" 
-               disabled={this.state.saving}>
-               {this.state.saving ? <Loader /> : "Publicar"} </button>
+               disabled={useCrud.saving}>
+               {useCrud.saving ? <Loader /> : "Publicar"} </button>
             </form>
           </div>
           <ul className="ul-comentarios">
-            {this.state.profissional.avaliacoes.length > 0 ?
-            this.state.profissional.avaliacoes.map(autor => 
+            {profissional.avaliacoes.length > 0 ?
+             profissional.avaliacoes.map(autor => 
             <li className="bg-comentario-avaliacao grid-12" key={autor.id}>
               <div className="foto-nome-autor">
                 <img alt="Foto Cliente Avaliação" src={autor.fotoAutorBase64}
@@ -178,6 +172,5 @@ class Perfil extends Component {
     </div>
     );
   }
-}
 
 export default Perfil;

@@ -333,6 +333,12 @@
   display: inline-block;
 }
 
+.loader-big {
+  margin: 180px auto 0 auto;
+  height: 50px;
+  width: 50px;
+}
+
 @keyframes is-rotating {
   to {
     transform: rotate(1turn);
