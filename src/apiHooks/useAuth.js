@@ -18,7 +18,7 @@ export const useAuth = () => {
     const dataUser = { usuario : usuario, senha : senha };
     setProcessing(true);
     try {
-      const response = await axios.post(`http://localhost:8080/login`, dataUser);
+      const response = await axios.post(`https://tohireapp.herokuapp.com/login`, dataUser);
       const token = response.headers['authorization'].replace("Bearer ", "");
       storeCredentials(token);
       setProcessing(false);

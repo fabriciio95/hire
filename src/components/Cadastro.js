@@ -11,7 +11,6 @@ const Cadastro = props => {
   const useCrud = useCrudService();
   const useAuth = useContext(AuthContext);
   const alert = useContext(AlertContext);
-  const [loading, setLoading] = useState(false);
   const [usuarioProfissional, setUsuarioProfissional] = useState({
     id : "",
     usuario : "",
@@ -25,6 +24,8 @@ const Cadastro = props => {
     euQuero : "",
     fotoBase64 : ""
   });
+
+  
   
   useEffect(() => {
     const editId = props.match.params.id;
@@ -49,7 +50,7 @@ const Cadastro = props => {
     if(usuarioProfissional.id) {
         document.getElementById("senha").required = false;
         document.getElementById("foto").required = false;
-        console.log(usuarioProfissional.euQuero);
+        console.log("euQu " + usuarioProfissional.euQuero);
         if(usuarioProfissional.euQuero !== "Contratar" && usuarioProfissional.euQuero !== "CONTRATAR" ) {
           document.getElementById("dados-perfil").style.display = "block";
           putRequiredFieldsProfissional(true);
@@ -82,8 +83,6 @@ const Cadastro = props => {
             useCrud.cadastrarProfissional(usuarioProfissional);
       }
     }
-    document.documentElement.scrollTop = 380; 
-    document.body.scrollTop = 380;
   }
 
 
@@ -148,7 +147,7 @@ const Cadastro = props => {
               <h2 className="introducao-sub-title-cadastro">Crie um perfil gratuito para desbloquear oportunidades para você ou para aqueles que mais precisam.</h2>
           </div>
         </section>
-        {useCrud.loading || loading ? <Loader /> : 
+        {useCrud.loading ? <Loader /> : 
         <section className="container">
           <form className={`form form-cadastro grid-9 ${useCrud.error ? "form-alert-cadastro" : ""}`} id="form-cadastro"   onSubmit={onSubmitHandler}>
             <h1 className="title-form">Cadastro</h1>
@@ -168,29 +167,27 @@ const Cadastro = props => {
                 onChange={event => onInputFotoChangeHandler(event)} required />
             <label htmlFor="select" className="label-form">Eu vou: </label>
             <select id="select"  name="euQuero" className="select-form"
-             onChange={e => dadosPerfilHandler(e)}>
-              <option selected={usuarioProfissional.euQuero === "Contratar" ? true : false} 
-                value="Contratar">Contratar</option>
-              <option selected={usuarioProfissional.euQuero === "SER_CONTRATADO" ? true : false} 
-                value="SER_CONTRATADO">Ser Contratado</option>
-              <option selected={usuarioProfissional.euQuero === "AMBOS" ? true : false} value="AMBOS">Ambos</option>
+             onChange={e => dadosPerfilHandler(e)} value={usuarioProfissional.euQuero}>
+              <option value="Contratar">Contratar</option>
+              <option value="SER_CONTRATADO">Ser Contratado</option>
+              <option  value="AMBOS">Ambos</option>
             </select>
             <div className="form-dados-perfil" id="dados-perfil" >
               <label htmlFor="endereco" className="label-form" >Endereço</label>
-              <input type="text" id="endereco" className="txt-form"  value={usuarioProfissional.endereco}
+              <input type="text" id="endereco" className="txt-form"  defaultValue={usuarioProfissional.endereco}
                 onChange={event => onInputUsuarioChangeHandler(event)} name="endereco"/>
               <label htmlFor="telefone" className="label-form" >Telefone</label>
-              <input type="text" id="telefone" className="txt-form"  value={usuarioProfissional.telefone}
+              <input type="text" id="telefone" className="txt-form"  defaultValue={usuarioProfissional.telefone}
                    onChange={event => onInputUsuarioChangeHandler(event)} name="telefone"/>
               <label htmlFor="email" className="label-form" >E-mail</label>
-              <input type="email" id="email" className="txt-form"  value={usuarioProfissional.email}
+              <input type="email" id="email" className="txt-form"  defaultValue={usuarioProfissional.email}
                    onChange={event => onInputUsuarioChangeHandler(event)} name="email"/>
               <label htmlFor="valor" className="label-form" >Valor/Hora</label>
-              <input type="text" id="valor" className="txt-form"  value={usuarioProfissional.valorHora}
+              <input type="text" id="valor" className="txt-form"  defaultValue={usuarioProfissional.valorHora}
                    onChange={event => onInputUsuarioChangeHandler(event)} name="valorHora" />
               <label htmlFor="descricao" className="label-form" >Descrição</label>
               <textarea id="descricao" className="txt-area-form" 
-               value={usuarioProfissional.descricao} placeholder="Ex: faxina, manicure, fotografia, etc..."  
+               defaultValue={usuarioProfissional.descricao} placeholder="Ex: faxina, manicure, fotografia, etc..."  
                onChange={event => onInputUsuarioChangeHandler(event)} name="descricao"></textarea>
             </div>
             <button type="submit" className="btn-form btn-form-cadastro" disabled={useCrud.saving}>

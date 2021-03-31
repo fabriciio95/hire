@@ -23,7 +23,7 @@ export const useCrudService = () => {
     alert.zerarState();
     setRedirect(false);
     try {
-      await axios.post(`http://localhost:8080/usuario`, usuario);
+      await axios.post(`https://tohireapp.herokuapp.com/usuario`, usuario);
       alert.setAlert("Cadastro realizado com sucesso!");
       setSaving(false);
       setRedirect(true);
@@ -39,11 +39,13 @@ export const useCrudService = () => {
     setError(null);
     setRedirect(false);
     try {
-      let response = await axios.put(`http://localhost:8080/usuario/${usuario.id}`, usuario,
+      let response = await axios.put(`https://tohireapp.herokuapp.com/usuario/${usuario.id}`, usuario,
            buildHeaderAuthorization());
       setUsuarioUpdated(response.data)
       alert.setAlert("Atualização feita com sucesso!");
       setSaving(false);
+      document.documentElement.scrollTop = 380; 
+      document.body.scrollTop = 380;
     } catch(error) {
       handleError(error);
     }
@@ -55,7 +57,7 @@ export const useCrudService = () => {
     setError(null);
     setRedirect(false);
     try {
-      await axios.post(`http://localhost:8080/profissional`, profissional);
+      await axios.post(`https://tohireapp.herokuapp.com/profissional`, profissional);
       setSaving(false);
       alert.setAlert("Cadastro realizado com sucesso!");
       setRedirect(true);
@@ -71,11 +73,13 @@ export const useCrudService = () => {
     setError(null);
     setRedirect(false);
     try {
-        var response = await axios.put(`http://localhost:8080/profissional/${profissional.id}`, profissional,
+        var response = await axios.put(`https://tohireapp.herokuapp.com/profissional/${profissional.id}`, profissional,
                 buildHeaderAuthorization());
         setUsuarioUpdated(response.data);
         alert.setAlert("Atualização feita com sucesso!");
         setSaving(false);
+        document.documentElement.scrollTop = 380; 
+        document.body.scrollTop = 380;
     } catch (error) {
       handleError(error);
     }
@@ -86,7 +90,7 @@ export const useCrudService = () => {
     setUsuarioLoaded(null);
     setError(null);
     try {
-      const response = await  axios.get(`http://localhost:8080/profissional/perfil/${id}`,
+      const response = await  axios.get(`https://tohireapp.herokuapp.com/profissional/perfil/${id}`,
          buildHeaderAuthorization());
       setUsuarioLoaded(response.data);
       setLoading(false);
@@ -104,7 +108,7 @@ export const useCrudService = () => {
     setError(null);
     setUsuarioLoaded(null);
     try {
-      var response = await axios.get(`http://localhost:8080/usuario-profissional/${id}`, buildHeaderAuthorization());
+      var response = await axios.get(`https://tohireapp.herokuapp.com/usuario-profissional/${id}`, buildHeaderAuthorization());
       setUsuarioLoaded(response.data);
       setLoading(false);
     } catch (error) {
@@ -129,7 +133,7 @@ export const useCrudService = () => {
     setSaving(true);
     alert.zerarState();
     try {
-      var response = await axios.post(`http://localhost:8080/avaliacao/publicar`, avaliacao,
+      var response = await axios.post(`https://tohireapp.herokuapp.com/avaliacao/publicar`, avaliacao,
       buildHeaderAuthorization());
       setAvaliacaoLoaded(response.data);
       setSaving(false);
@@ -165,6 +169,7 @@ export const useCrudService = () => {
        }
        alert.setAlert(`Erro: ${messageError}`);
       } else {
+        console.log(error.response);
         alert.setAlert(`Erro: ${error.response.data.titulo}`);
       }
       alert.setShowAlertErro(true);

@@ -12,7 +12,7 @@ export const useBuscaService = () => {
     setLoading(true);
     setError("");
     try {
-     var response = await axios.get(`http://localhost:8080/search/${description}`);
+     var response = await axios.get(`https://tohireapp.herokuapp.com/search/${description}`);
      setProfissionais(response.data);
      document.documentElement.scrollTop = 300;
      document.body.scrollTop = 300;
