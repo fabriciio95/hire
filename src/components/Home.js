@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import FooterAzul from './FooterAzul'
+import { useCrudService } from '../apiHooks/useCrudService'
 
 
 
 const Home = () => {  
+
+  const useCrud = useCrudService();
+  const [startServer, setStateServer] = useState(true);
+
+  useEffect(() => {
+    if(startServer === true) {
+      useCrud.startServer();
+      setStateServer(false);
+    }
+    // eslint-disable-next-line
+  }, []);
+
     return (
       <div>
         <section>

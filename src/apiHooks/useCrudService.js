@@ -144,6 +144,10 @@ export const useCrudService = () => {
     }
   }
 
+  const startServer = async () => {
+    await axios.get("https://tohireapp.herokuapp.com/start");
+  }
+
   function clearAvaliacaoLoaded () {
     setAvaliacaoLoaded(null);
   }
@@ -184,5 +188,5 @@ export const useCrudService = () => {
   }
 
   return {cadastrarUsuario, atualizarUsuario, cadastrarProfissional, atualizarProfissional, getPerfilProfissional, 
-        getUsuarioProfissional, fazerAvaliacao, clearUsuarioLoaded, clearAvaliacaoLoaded, error, saving, redirect, loading, usuarioLoaded, usuarioUpdated, avaliacaoLoaded };
+        getUsuarioProfissional, fazerAvaliacao, clearUsuarioLoaded, clearAvaliacaoLoaded, startServer, error, saving, redirect, loading, usuarioLoaded, usuarioUpdated, avaliacaoLoaded };
 }
