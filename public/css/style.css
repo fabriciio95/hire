@@ -37,7 +37,6 @@
   font-size: 14px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  background-color: none;
 }
 
 .btn:hover {
@@ -189,7 +188,7 @@
   padding: 0 0 5px 60px;
   color: #172a64;
   letter-spacing: 0.1em;
-  font-weight: 549;
+  font-weight: 500;
   font-size: 24px;
 }
 
@@ -331,6 +330,12 @@
   vertical-align: bottom;
   width: 50px;
   display: inline-block;
+}
+
+.loader-big {
+  margin: 180px auto 0 auto;
+  height: 50px;
+  width: 50px;
 }
 
 @keyframes is-rotating {

@@ -1,72 +1,61 @@
-import React, { Component } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Alert from './Alert';
 import FooterEscuro from './FooterEscuro';
-import AuthService from '../api/AuthService';
 import Loader from './Loader'
+import { AuthContext } from '../apiHooks/useAuth';
+import { AlertContext } from '../apiHooks/useAlert';
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-     alert: "",
-     showAlertErro : true,
-     loading : false,
-     loggedIn : false, 
-     usuario : "",
-     senha : ""
-    }
-    this.onSubmitLoginHandler = this.onSubmitLoginHandler.bind(this);
-    this.onInputChangeHandler = this.onInputChangeHandler.bind(this);
-  }
+const Login = (props) => { 
+  const auth = useContext(AuthContext);
+  const alert = useContext(AlertContext);
+  const [usuario, setUsuario] = useState("");
+  const [senha, setSenha] = useState("");
+
   
-  componentDidMount(){
+  
+  useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-    if(this.props.location.state && this.props.location.state.alert) {
-      this.setState({ alert : this.props.location.state.alert , showAlertErro : false });
-    } 
-  }
+    if(props.location.state && props.location.state.alert) {
+      alert.setAlert(props.location.state.alert);  
+      alert.setShowAlertErro(false);
+    } else {
+      alert.zerarState();
+    }
+  // eslint-disable-next-line
+}, []);
 
-  onInputChangeHandler(event) {
-    var field = event.target.name;
-    var value = event.target.value;
-    this.setState({ [field] : value} );
-  }
-
-  onSubmitLoginHandler(event) {
+ const onSubmitLoginHandler = (event) => {
       event.preventDefault();
-      this.setState({ loading : true });
-      AuthService.login(this.state.usuario, this.state.senha, 
-        (success) => {
-          if(success) {
-            this.setState({ loggedIn : true, loading: false });
-            this.props.onLoginSuccess();
-          } else {
-              this.setState({ alert : "Usuário ou senha inválidos",  showAlertErro : true,  loading : false });
-          }
+      auth.login(usuario, senha, 
+        erro => {
+          if(erro) {
+            alert.setAlert("Usuário ou senha inválidos!");
+            alert.setShowAlertErro(true);
+          } 
         });
   }
 
-  render() {
-    if(AuthService.isAuthenticated() || this.state.loggedIn) {
-      return ( <Redirect to="/busca" />)
+ 
+    if(auth.isAuthenticated()) {
+      return  <Redirect to="/busca" />
     }
     return (
       <div>
       <section className="container">
-        <form onSubmit={this.onSubmitLoginHandler} className={`form grid-9 ${this.state.alert ? "form-alert" : ""}`}>
+        <form onSubmit={onSubmitLoginHandler} className={`form grid-9 ${auth.error ? "form-alert" : ""}`}>
           <h1 className="title-form">Entrar</h1>
-         { this.state.alert ? <Alert message={this.state.alert} error={this.state.showAlertErro} /> : "" }
-          <label htmlFor="usuario" className={`label-form ${this.state.alert ? "" : "label-alert"}`} >Usuário</label>
+         { alert.alert ? <Alert message={alert.alert} error={alert.showAlertErro} />  : ""}
+          <label htmlFor="usuario" className={`label-form ${auth.error ? "" : "label-alert"}`} >Usuário</label>
           <input type="text" id="usuario" className="txt-form" required  name="usuario"
-              onChange={e => this.onInputChangeHandler(e)} />
+              onChange={e => setUsuario(e.target.value)} />
           <label htmlFor="senha" className="label-form">Senha</label>
           <input type="password" id="senha" className="txt-form" required  name="senha"
-              onChange={e => this.onInputChangeHandler(e)}
+              onChange={e => setSenha(e.target.value)}
                 autoComplete = "senha atual" />
-          <button type="submit" className="btn-form" disabled={this.state.loading}>
-                {this.state.loading ? 
+          <button type="submit" className="btn-form" disabled={auth.processing}>
+                {auth.processing ? 
                 <Loader /> : "Entrar"}
             </button>
           <p className="texto-form">
@@ -77,7 +66,6 @@ class Login extends Component {
       <FooterEscuro />
       </div>
     );
-  }
 }
 
 export default Login;

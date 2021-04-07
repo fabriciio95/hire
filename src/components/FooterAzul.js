@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-class FooterAzul extends Component {  
-  render() {
+const FooterAzul =  (props) => {  
     return (
       <div>
         <section className="bg-footer-azul">
@@ -13,7 +12,7 @@ class FooterAzul extends Component {
                a <span className="logo-text logo-text-smaller">Hire</span> é gerado milhares
               de novas oportunidades de emprego, enquanto você resolve o seu problema com segurança e economia.
           </p>
-            {this.props.isWithButton ? 
+            {props.isWithButton ? 
             <div>
               <Link to="/cadastro" className="grid-7 btn-footer">Quero me cadastrar</Link>
               <Link to="/busca" className="grid-7 btn-footer bg-footer-azul-direito ">Quero contratar</Link>
@@ -31,6 +30,5 @@ class FooterAzul extends Component {
       </div>
     );
   }
-}
 
 export default FooterAzul;
