@@ -6,7 +6,7 @@
 http://apphire.herokuapp.com/
 
 
-Hire é uma plataforma construída para fins de **aprendizado** que visa gerar oportunidades a trabalhadores autônomos, expondo seu perfil para que clientes possam visualizar, entrar em contato e dar sua avaliação dos serviços prestados.
+Hire é um sistema construído para fins de **aprendizado** que visa gerar oportunidades a trabalhadores autônomos, expondo seu perfil para que clientes possam visualizar, entrar em contato e dar sua avaliação dos serviços prestados.
 
 
 ## Layout home e login
