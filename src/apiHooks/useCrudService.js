@@ -133,7 +133,7 @@ export const useCrudService = () => {
     setSaving(true);
     alert.zerarState();
     try {
-      var response = await axios.post(`https://tohireapp.herokuapp.com/avaliacao/publicar`, avaliacao,
+      var response = await axios.post(`https://tohireapp.herokuapp.com/avaliacao`, avaliacao,
       buildHeaderAuthorization());
       setAvaliacaoLoaded(response.data);
       setSaving(false);
